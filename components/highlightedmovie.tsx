@@ -6,8 +6,7 @@ export default function HighlightedMovie() {
 
 const styles = StyleSheet.create({
   movie: {
-    borderRadius: 15,
     height: 150,
-    backgroundColor: "#bbb",
+    backgroundColor: "#232323",
   },
 });

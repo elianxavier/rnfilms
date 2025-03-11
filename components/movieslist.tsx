@@ -1,46 +1,108 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BASE_URL, API_TOKEN } from "@env";
 import { useEffect, useState } from "react";
+import { Link } from "expo-router";
 
-async function consulta() {
-  return await fetch(`${process.env.BASE_URL}/movie/12`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.API_TOKEN}`,
-      Accept: "application/json",
-    },
-  }).then((data) => {
-    console.log(data);
-  });
-}
+export default function MoviesList(props: { search: string }) {
+  const [films, setFilms] = useState<any>([]);
 
-export default function MoviesList() {
-  const [response, setResponse] = useState<any>();
+  const getFilms = async () => {
+    const typeSearch = props.search == "" ? "discover" : "search";
 
-  useEffect(() => {
-    async function pegarFilmes() {
-      const res = await fetch(`${process.env.BASE_URL}/movie/12`, {
+    const params = {
+      language: "pt-br",
+      api_key: `${process.env.API_KEY}`,
+      include_adult: "false",
+      ...(typeSearch === "search" && { query: props.search }),
+    };
+
+    fetch(
+      `${process.env.BASE_URL}/${typeSearch}/movie?` +
+        new URLSearchParams(params).toString(),
+      {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
           Accept: "application/json",
+          Authorization: `Bearer ${process.env.API_TOKEN}`,
         },
+      }
+    )
+      .then((data) => data.json())
+      .then((data) => {
+        setFilms(data.results);
       });
-      const newData = await res.json();
+  };
 
-      setResponse(newData);
-      console.log("a");
-      console.log(newData);
-    }
-
-    pegarFilmes();
+  useEffect(() => {
+    getFilms();
   }, []);
 
+  useEffect(() => {
+    getFilms();
+  }, [props.search]);
+
   return (
-    <View>
-      <View>{response}</View>
-    </View>
+    <ScrollView style={styles.list}>
+      <View style={{ gap: 10 }}>
+        {films.map((film: any, index: number) => (
+          <Link
+            push
+            key={"link" + index}
+            href={{
+              pathname: "/movie/[id]",
+              params: { id: "1" },
+            }}
+          >
+            <View style={styles.film}>
+              <Image
+                style={styles.banner}
+                source={{
+                  uri: `https://image.tmdb.org/t/p/original${film.poster_path}`,
+                }}
+              />
+              <View style={styles.details}>
+                <Text style={styles.title}>{film.title}</Text>
+                <Text style={styles.description}>{film.overview}</Text>
+              </View>
+            </View>
+          </Link>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  list: {
+    flexDirection: "column",
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+  },
+  film: {
+    flexDirection: "row",
+    padding: 10,
+    gap: 10,
+    backgroundColor: "#232323",
+    borderRadius: 10,
+  },
+  banner: {
+    height: 100,
+    width: 66.6,
+    borderRadius: 7,
+  },
+  details: {
+    flex: 1,
+    height: 100,
+    maxHeight: 100,
+    overflow: "hidden",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  description: {
+    color: "#d9d9d9",
+  },
+});
