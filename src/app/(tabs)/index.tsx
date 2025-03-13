@@ -2,6 +2,7 @@ import { StyleSheet, TextInput, View } from "react-native";
 import HighlightedMovie from "../../../components/highlightedmovie";
 import MoviesList from "../../../components/movieslist";
 import { useState } from "react";
+import colors from "../../../assets/theme/colors";
 
 export default function Index() {
   const [search, setSearch] = useState<string>("");
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     height: "100%",
     gap: 20,
-    backgroundColor: "#111",
+    backgroundColor: colors.backgroundPage,
   },
   search: {
     marginTop: 20,
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginHorizontal: 10,
     borderRadius: 50 / 2,
-    backgroundColor: "#232323",
+    backgroundColor: colors.backgroundCard,
     color: "#fff",
   },
 });

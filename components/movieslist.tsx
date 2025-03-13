@@ -2,6 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BASE_URL, API_TOKEN } from "@env";
 import { useEffect, useState } from "react";
 import { Link } from "expo-router";
+import colors from "../assets/utilities/colors";
 
 export default function MoviesList(props: { search: string }) {
   const [films, setFilms] = useState<any>([]);
@@ -45,13 +46,13 @@ export default function MoviesList(props: { search: string }) {
   return (
     <ScrollView style={styles.list}>
       <View style={{ gap: 10 }}>
-        {films.map((film: any, index: number) => (
+        {films.map((film: any) => (
           <Link
             push
-            key={"link" + index}
+            key={film.id}
             href={{
               pathname: "/movie/[id]",
-              params: { id: "1" },
+              params: { id: film.id },
             }}
           >
             <View style={styles.film}>
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     gap: 10,
-    backgroundColor: "#232323",
+    backgroundColor: colors.backgroundPage,
     borderRadius: 10,
   },
   banner: {
