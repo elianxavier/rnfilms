@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { BASE_URL, API_TOKEN } from "@env";
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import StarVote from "../../../components/starvote";
 import colors from "../../../assets/theme/colors";
 
@@ -43,16 +43,17 @@ export default function Movie() {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.banner}
-        source={{
-          uri: `https://image.tmdb.org/t/p/original${film?.poster_path}`,
-        }}
-      />
-
-      <View>
-        <Text style={styles.text}>Título</Text>
-        <Text style={styles.text}>{film?.title}</Text>
+      <View style={styles.header}>
+        <Image
+          style={styles.banner}
+          source={{
+            uri: `https://image.tmdb.org/t/p/original${film?.backdrop_path}`,
+          }}
+        />
+        <View>
+          <Text style={styles.title}>{film?.title}</Text>
+          <StarVote vote_value={5} />
+        </View>
       </View>
 
       <View>
@@ -71,21 +72,35 @@ export default function Movie() {
 
       <View>
         <Text style={styles.text}>Nota</Text>
-        {/* <StarVote vote_value={5} /> */}
+
         <Text style={styles.text}>{film?.vote_average}</Text>
       </View>
     </View>
   );
 }
 
+const windowWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundPage,
+    alignItems: "center",
+  },
+  header: {
+    position: "relative",
   },
   banner: {
-    height: 300,
-    width: 200,
+    height: (windowWidth / 2) * 3,
+    width: windowWidth,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "white",
+    position: "absolute",
+    bottom: 15,
+    left: 15,
   },
   text: {
     color: "white",

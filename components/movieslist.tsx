@@ -2,7 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { BASE_URL, API_TOKEN } from "@env";
 import { useEffect, useState } from "react";
 import { Link } from "expo-router";
-import colors from "../assets/utilities/colors";
+import colors from "../assets/theme/colors";
 
 export default function MoviesList(props: { search: string }) {
   const [films, setFilms] = useState<any>([]);
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     gap: 10,
-    backgroundColor: colors.backgroundPage,
+    backgroundColor: colors.backgroundCard,
     borderRadius: 10,
   },
   banner: {
