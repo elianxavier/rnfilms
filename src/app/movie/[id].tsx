@@ -1,13 +1,34 @@
 import { useLocalSearchParams } from "expo-router";
 import { BASE_URL, API_TOKEN } from "@env";
 import { useEffect, useState } from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-import StarVote from "../../../components/starvote";
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import colors from "../../../assets/theme/colors";
+import { LinearGradient } from "expo-linear-gradient";
+import styles from "../../../assets/theme/movie";
 
 export default function Movie() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [film, setFilm] = useState<any>();
+
+  const convertFromMinutes = (total: number) => {
+    const minutes: number = total % 60;
+    const hours: number = (total - minutes) / 60;
+
+    if (hours < 1) {
+      return minutes + " minutos";
+    }
+
+    return hours + (hours != 1 ? " horas " : " hora ") + minutes + " minutos";
+  };
 
   const getFilms = async () => {
     fetch(
@@ -27,12 +48,6 @@ export default function Movie() {
     )
       .then((data) => data.json())
       .then((data) => {
-        console.log(data.runtime);
-        const minutes: number = data.runtime % 60;
-        const hours: number = (data.runtime - minutes) / 60;
-        data.runtime =
-          hours + (hours != 1 ? " horas " : " hora ") + minutes + " minutos";
-        console.log(data.run_time);
         setFilm(data);
       });
   };
@@ -42,67 +57,55 @@ export default function Movie() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.banner}
-          source={{
-            uri: `https://image.tmdb.org/t/p/original${film?.backdrop_path}`,
-          }}
-        />
-        <View>
-          <Text style={styles.title}>{film?.title}</Text>
-          <StarVote vote_value={5} />
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            style={styles.banner}
+            source={{
+              uri: `https://image.tmdb.org/t/p/original${film?.backdrop_path}`,
+            }}
+          />
+          <LinearGradient
+            colors={["transparent", colors.backgroundPage]}
+            style={styles.mainInfo}
+          >
+            <Text style={styles.title}>{film?.title}</Text>
+
+            <View style={styles.vote}>
+              <FontAwesomeIcon icon={faStar} color="yellow" size={20} />
+              <Text style={styles.voteText}>
+                {film?.vote_average.toFixed(1)}/10
+              </Text>
+            </View>
+          </LinearGradient>
+        </View>
+
+        <View style={styles.main}>
+          <View style={{ gap: 5 }}>
+            <View style={styles.info}>
+              <Text style={styles.infoTitle}>Gêneros</Text>
+              {film?.genres.map((genre: any) => (
+                <Text style={styles.infoText} key={genre.id}>
+                  {genre.name}
+                </Text>
+              ))}
+            </View>
+
+            <View style={styles.info}>
+              <Text style={styles.infoTitle}>Duração</Text>
+              <Text style={styles.infoText}>
+                {convertFromMinutes(film?.runtime)}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.resumo}>
+            <Text style={styles.infoTitle}>Sinopse</Text>
+            <Text style={styles.infoText}>{film?.overview}</Text>
+          </View>
         </View>
       </View>
-
-      <View>
-        <Text style={styles.text}>Gêneros</Text>
-        {film?.genres.map((genre: any) => (
-          <Text style={styles.text} key={genre.id}>
-            {genre.name}
-          </Text>
-        ))}
-      </View>
-
-      <View>
-        <Text style={styles.text}>Resumo</Text>
-        <Text style={styles.text}>{film?.overview}</Text>
-      </View>
-
-      <View>
-        <Text style={styles.text}>Nota</Text>
-
-        <Text style={styles.text}>{film?.vote_average}</Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
-
-const windowWidth = Dimensions.get("window").width;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.backgroundPage,
-    alignItems: "center",
-  },
-  header: {
-    position: "relative",
-  },
-  banner: {
-    height: (windowWidth / 2) * 3,
-    width: windowWidth,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "white",
-    position: "absolute",
-    bottom: 15,
-    left: 15,
-  },
-  text: {
-    color: "white",
-  },
-});
