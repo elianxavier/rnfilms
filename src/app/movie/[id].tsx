@@ -85,9 +85,10 @@ export default function Movie() {
           <View style={{ gap: 5 }}>
             <View style={styles.info}>
               <Text style={styles.infoTitle}>Gêneros</Text>
-              {film?.genres.map((genre: any) => (
+              {film?.genres.map((genre: any, index: number) => (
                 <Text style={styles.infoText} key={genre.id}>
                   {genre.name}
+                  {index + 1 == film?.genres.length ? "" : ","}
                 </Text>
               ))}
             </View>
@@ -100,7 +101,7 @@ export default function Movie() {
             </View>
           </View>
 
-          <View style={styles.resumo}>
+          <View style={styles.synopsis}>
             <Text style={styles.infoTitle}>Sinopse</Text>
             <Text style={styles.infoText}>{film?.overview}</Text>
           </View>

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 5,
   },
-  resumo: {
+  synopsis: {
     width: "100%",
     gap: 5,
   },

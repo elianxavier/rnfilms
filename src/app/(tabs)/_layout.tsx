@@ -4,7 +4,15 @@ import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: "blue",
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: "",
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
