@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundPage,
     alignItems: "center",
-    minHeight: "100%"
+    minHeight: "100%",
+    paddingBottom: 100
   },
   header: {
     position: "relative",

@@ -1,15 +1,21 @@
 import { Tabs } from "expo-router";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
+import colors from "../../../assets/theme/colors";
+import { Text } from "react-native";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "blue",
+        tabBarActiveTintColor: "white",
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "",
+          backgroundColor: colors.backgroundCard,
+          marginHorizontal: 20,
+          marginVertical: 10,
+          borderRadius: 25,
+          borderStartWidth: 0,
         },
       }}
     >
@@ -25,7 +31,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="raffleone"
         options={{
-          title: "Sortear",
+          title: "Aleatório",
           tabBarIcon: ({ color }) => (
             <FontAwesomeIcon size={28} icon={faHome} color={color} />
           ),
@@ -34,7 +40,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="multiplyraffle"
         options={{
-          title: "Aleatório",
+          title: "Sortear",
           tabBarIcon: ({ color }) => (
             <FontAwesomeIcon size={28} icon={faHome} color={color} />
           ),
