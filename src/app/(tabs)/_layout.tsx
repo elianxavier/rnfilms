@@ -1,6 +1,8 @@
 import { Tabs } from "expo-router";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons/faHome";
+import { faShuffle } from "@fortawesome/free-solid-svg-icons/faShuffle";
+import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import colors from "../../../assets/theme/colors";
 import { Text } from "react-native";
 
@@ -33,7 +35,7 @@ export default function TabLayout() {
         options={{
           title: "Aleatório",
           tabBarIcon: ({ color }) => (
-            <FontAwesomeIcon size={28} icon={faHome} color={color} />
+            <FontAwesomeIcon size={28} icon={faShuffle} color={color} />
           ),
         }}
       />
@@ -42,7 +44,7 @@ export default function TabLayout() {
         options={{
           title: "Sortear",
           tabBarIcon: ({ color }) => (
-            <FontAwesomeIcon size={28} icon={faHome} color={color} />
+            <FontAwesomeIcon size={28} icon={faDice} color={color} />
           ),
         }}
       />
