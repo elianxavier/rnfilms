@@ -24,20 +24,20 @@ export default function Index() {
 
     const params = {
       language: "pt-br",
-      api_key: `${process.env.API_KEY}`,
+      api_key: `${process.env.EXPO_PUBLIC_API_KEY}`,
       include_adult: "false",
       ...(typeSearch === "search" && { query: query }),
     };
 
     fetch(
-      `${process.env.BASE_URL}/${typeSearch}/movie?` +
+      `${process.env.EXPO_PUBLIC_BASE_URL}/${typeSearch}/movie?` +
         new URLSearchParams(params).toString(),
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`,
         },
       }
     )

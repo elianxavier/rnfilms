@@ -1,6 +1,5 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import { BASE_URL, API_TOKEN } from "@env";
-import React, { useEffect, useState, useCallback } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
+import React from "react";
 import { Link } from "expo-router";
 import styles from "../assets/theme/movieslist";
 

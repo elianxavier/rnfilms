@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import { BASE_URL, API_TOKEN } from "@env";
+// import { BASE_URL, API_TOKEN } from "@env";
 import { useEffect, useState } from "react";
 import {
   Dimensions,
@@ -32,17 +32,17 @@ export default function Movie() {
 
   const getFilms = async () => {
     fetch(
-      `${process.env.BASE_URL}/movie/${id}?` +
+      `${process.env.EXPO_PUBLIC_BASE_URL}/movie/${id}?` +
         new URLSearchParams({
           language: "pt-br",
-          api_key: `${process.env.API_KEY}`,
+          api_key: `${process.env.EXPO_PUBLIC_API_KEY}`,
         }).toString(),
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_TOKEN}`,
         },
       }
     )
