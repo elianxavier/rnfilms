@@ -5,6 +5,7 @@ import { faShuffle } from "@fortawesome/free-solid-svg-icons/faShuffle";
 import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import colors from "../../../assets/theme/colors";
 import { Text } from "react-native";
+import { faHistory } from "@fortawesome/free-solid-svg-icons";
 
 export default function TabLayout() {
   return (
@@ -40,11 +41,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="multiplyraffle"
+        name="history"
         options={{
-          title: "Sortear",
+          title: "Histórico",
           tabBarIcon: ({ color }) => (
-            <FontAwesomeIcon size={28} icon={faDice} color={color} />
+            <FontAwesomeIcon size={28} icon={faHistory} color={color} />
           ),
         }}
       />
